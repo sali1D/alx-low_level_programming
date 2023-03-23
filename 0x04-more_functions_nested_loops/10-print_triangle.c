@@ -1,10 +1,10 @@
 #include "main.h"
 /**
- * print_square - printing squares
+ * print_triangle - printing squares
  * @n: input size
  * Return: returning nothing
  */
-void print_square(int n)
+void print_triangle(int n)
 {
 	int i, j;
 
