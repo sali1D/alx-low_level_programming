@@ -9,20 +9,36 @@
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	const listint_t *current = head, *temp;
+	const listint_t *current = head, *prev;
 	size_t count = 0;
-	while (current != NULL)
+
+	while (current)
 	{
 		printf("[%p] %d\n", (void *)current, current->n);
 		count++;
-		if (current <= current->next)
+		if (current > current->next)
+			prev = current, current = current->next;
+		else
 		{
-			fprintf(stderr, "Error: loop detected in list\n");
-			exit(98);
+			printf("-> [%p] %d\n", (void *)current->next, current->next->n);
+			break;
 		}
-		temp = current;
-		current = current->next;
-		free(temp);
+		if (prev >= current)
+		{
+			printf("-> [%p] %d\n", (void *)current->next, current->next->n);
+			break;
+		}
 	}
-	return (count);
+	if (!current)
+		return (count);
+	current = current->next;
+	while (current != prev)
+	{
+		printf("[%p] %d\n", (void *)current, current->n);
+		count++;
+		current = current->next;
+	}
+	printf("[%p] %d\n", (void *)current, current->n);
+	count++;
+	exit(98);
 }
